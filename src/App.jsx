@@ -7,10 +7,14 @@ import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+
+
 import styles from './App.module.css';
 import Description from './components/Description';
 import Menu from './components/Menu';
 import Treats from './components/Treats';
+import Address from './components/Address';
+
 
 const RegistrationForm = ({ onClose }) => {
   const handleSubmit = (event) => {
@@ -105,8 +109,7 @@ const MyComponent = () => {
         <Box className={styles.subSection}>
           <Box className={styles.subSectionText}>
             <span style={{ fontWeight: 'bold' }}>Add commonly treats</span>
-            <p>This helps you come 
-up in relevant search results</p>
+            <p>This helps you come up in relevant search results</p>
 </Box>
 <Box className='sub-section-button'>
 <Button className={styles.button} onClick={handleOpenTreats}>
@@ -150,8 +153,16 @@ up in relevant search results</p>
   >
     <RegistrationForm onClose={handleCloseRegistrationForm} />
   </Popover>
+
+
+  <Box className={styles.section} id='section2'>
+        <Box className={styles.sectionTitle}>
+          <p>ADDRESS</p>
+        </Box>
+      <Address />
+        
 </Box>
-);
-};
+</Box>
+)}
 
 export default MyComponent;
