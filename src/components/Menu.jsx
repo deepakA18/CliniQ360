@@ -23,6 +23,7 @@ const Menu = () => {
           id="demo-simple-select-standard"
           value={field}
           onChange={handleChange}
+          sx={{backgroundColor: 'transparent'}}
         >
           
           <MenuItem value='Cardio'>Cardio</MenuItem>

@@ -1,6 +1,6 @@
 // Address.js
 import { useState, useEffect } from 'react';
-import { Box, Autocomplete, TextField } from '@mui/material';
+import { Box, Autocomplete, TextField,Stack } from '@mui/material';
 import { Country, State, City } from 'country-state-city';
 
 const Address = () => {
@@ -39,7 +39,7 @@ const Address = () => {
   useEffect(() => {
     // Fetch the list of states when the selected country changes
     if (selectedCountry) {
-      const stateList = State.getAllStates(selectedCountry);
+      const stateList = State.getStatesOfCountry(selectedCountry.isoCode)
       setStates(stateList);
     }
   }, [selectedCountry]);
@@ -47,21 +47,39 @@ const Address = () => {
   useEffect(() => {
     // Fetch the list of cities when the selected state changes
     if (selectedState) {
-      const cityList = City.getAllCities(selectedCountry, selectedState);
+      const cityList = City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode);
+      console.log('City List:', cityList);
       setCities(cityList);
     }
-  }, [selectedCountry, selectedState]);
+  }, [selectedCountry,selectedState]);
+  
 
   return (
     <div>
-      <Box sx={{ mt: 2, width: '30vw', display: 'flex', justifyContent: 'space-between' }}>
+       <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+       <TextField
+          id="outlined-multiline-flexible"
+          label="Address"
+          multiline
+          maxRows={4}
+        />
+    </Box>
+      <Box sx={{ mt: 2}}>
+        <Stack direction='row' spacing={10}>
         <Autocomplete
           options={countries}
           getOptionLabel={getCountryLabel}
           value={selectedCountry}
           onChange={handleCountryChange}
           renderInput={(params) => <TextField {...params} label="Country" />}
-          sx={{width: '20vw'}}
+          sx={{width: '15vw'}}
         />
 
         <Autocomplete
@@ -70,7 +88,7 @@ const Address = () => {
           value={selectedState}
           onChange={handleStateChange}
           renderInput={(params) => <TextField {...params} label="State" />}
-          sx={{width: '20vw'}}
+          sx={{width: '15vw'}}
         />
 
         <Autocomplete
@@ -79,8 +97,10 @@ const Address = () => {
           value={selectedCity}
           onChange={handleCityChange}
           renderInput={(params) => <TextField {...params} label="City" />}
-          sx={{width: '20vw'}}
+          sx={{width: '15vw'}}
+          
         />
+        </Stack>
       </Box>
     </div>
   );

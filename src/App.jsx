@@ -1,79 +1,44 @@
 import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
+import {Box,Stack,TextField,Avatar,Button, Popover} from '@mui/material';
 
 import styles from './App.module.css';
 import Description from './components/Description';
 import Menu from './components/Menu';
 import Treats from './components/Treats';
+import RegistrationForm from './components/RegistrationForm';
 import Address from './components/Address';
+import AwardsForm from './components/Awards';
 
 
-const RegistrationForm = ({ onClose }) => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Registration form submitted");
-    onClose();
-  };
-
-  return (
-    <Container maxWidth="sm" style={{ padding: '20px' }}>
-      <Typography variant="h6" gutterBottom>
-        Add new registration
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField required id="registration-id" label="Registration ID" fullWidth margin="normal" />
-        <TextField required id="registration-council" label="Registration Council" fullWidth margin="normal" />
-        <TextField required id="valid-from" label="Valid From" type="date" InputLabelProps={{ shrink: true }} fullWidth margin="normal" />
-        <Stack direction="row" spacing={2} justifyContent="flex-end" sx={{ mt: 2 }}>
-          <Button variant="outlined" onClick={onClose}>Cancel</Button>
-          <Button type="submit" variant="contained" color="primary">Add Registration</Button>
-        </Stack>
-      </form>
-    </Container>
-  );
-};
 
 const MyComponent = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openTreats, setOpenTreats] = useState(false);
   const [openRegistrationForm, setOpenRegistrationForm] = useState(false);
+  const [openAwardForm, setOpenAwardForm] = useState(false);
+  
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleOpenTreats = () => {
-    setOpenTreats(true);
-  };
-
-  const handleCloseTreats = () => {
-    setOpenTreats(false);
-  };
+  const handleClick = (event) =>  setAnchorEl(event.currentTarget);
+  const handleClose = () =>  setAnchorEl(null);
+   
+  const handleOpenTreats = () =>  setOpenTreats(true);
+  const handleCloseTreats = () => setOpenTreats(false);
 
   const handleOpenRegistrationForm = () => setOpenRegistrationForm(true);
   const handleCloseRegistrationForm = () => setOpenRegistrationForm(false);
+
+  const handleOpenAwardForm  = () => setOpenAwardForm(true);
+  const handleCloseAwardForm = () => setOpenAwardForm(false);
 
   return (
     <Box className='main' component="form" noValidate autoComplete='off'>
       <Box sx={{ ml: 13, padding: '5vh' }} id='section1'>
         <Stack direction="row" spacing={2}>
           <Avatar alt="profile image" src="" sx={{ width: 80, height: 80 }} />
-          <TextField id="standard-basic" label="Name" variant="standard" />
+          <TextField id="standard-basic" label="Full Name" variant="standard" />
         </Stack>
       </Box>
 
@@ -91,7 +56,10 @@ const MyComponent = () => {
               <span style={{ fontWeight: 'bold' }}>Add About You</span>
               <span>&rarr;</span>
             </Button>
-            <Popover id={id} open={open} anchorEl={anchorEl} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'right', }}>
+            <Popover id={id} open={open} anchorEl={anchorEl} onClose={handleClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center', }} transformOrigin={{
+      vertical: 'center',
+      horizontal: 'center',
+    }}>
               <Description />
             </Popover>
           </Box>
@@ -136,10 +104,7 @@ const MyComponent = () => {
           <span>→</span>
         </Button>
       </Box>
-    </Box>
-  </Box>
-
-  <Popover
+      <Popover
     open={openRegistrationForm}
     onClose={handleCloseRegistrationForm}
     anchorOrigin={{
@@ -153,15 +118,50 @@ const MyComponent = () => {
   >
     <RegistrationForm onClose={handleCloseRegistrationForm} />
   </Popover>
+    </Box>
+  </Box>
 
-
-  <Box className={styles.section} id='section2'>
+  
+  <Box className={styles.section} id='section6'>
         <Box className={styles.sectionTitle}>
           <p>ADDRESS</p>
         </Box>
-      <Address />
-        
+        <Box className={styles.subSection} id='subsection6'>
+        <Address />
+        </Box>      
 </Box>
+
+<Box className={styles.section} id='section7'>
+        <Box className={styles.sectionTitle}>
+          <p>AWARDS & PUBLICATIONS</p>
+        </Box>
+        <Box className={styles.subSection}>
+          <Box className={styles.subSectionText}>
+            <span style={{ fontWeight: 'bold' }}>Add awards & publications</span>
+            <p>At all the awards you&apos;ve won and the work you&apos;ve published</p>
+          </Box>
+          <Box className='sub-section-button'>
+            <Button className={styles.button} aria-describedby={id} variant="outlined" onClick={handleOpenAwardForm}>
+              <span style={{ fontWeight: 'bold' }}>Add Awards & Publications</span>
+              <span>&rarr;</span>
+            </Button>
+          </Box>
+          <Popover
+    open={openAwardForm}
+    onClose={handleCloseAwardForm}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'center',
+      horizontal: 'center',
+    }}
+  >
+    <AwardsForm onClose={handleCloseAwardForm}/>
+  </Popover>
+        </Box>
+      </Box>
 </Box>
 )}
 
