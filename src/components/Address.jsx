@@ -64,9 +64,23 @@ const Address = () => {
       noValidate
       autoComplete="off"
     >
+      <TextField
+          id="outlined-multiline-flexible"
+          label="Clinic's Name"
+          multiline
+          maxRows={4}
+        /> 
+
        <TextField
           id="outlined-multiline-flexible"
-          label="Address"
+          label="Address Line 1"
+          multiline
+          maxRows={4}
+        />
+
+<TextField
+          id="outlined-multiline-flexible"
+          label="Street"
           multiline
           maxRows={4}
         />
